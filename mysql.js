@@ -45,6 +45,17 @@ async function login(user){
     })   
 }
 
+async function update(user) {
+    return new Promise((resolve, reject) => {
+        var sql = "UPDATE resuwee_users SET profile='"+user.profile+"' WHERE name = '"+user.name+"'";
+        con.query(sql, function (err, result) {
+            if (err) reject(err);
+            console.log(result.affectedRows + " record(s) updated");
+            resolve(result);
+        });
+    })
+}
+
 module.exports.login = login;
 module.exports.register = register;
 module.exports.startServer = startServer;

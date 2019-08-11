@@ -15,28 +15,28 @@ async function startServer(){
 }
 
 async function createTable(){
-    var sql = "CREATE TABLE resuwee_users (name VARCHAR(255), password VARCHAR(255), profile VARCHAR(255), style VARCHAR(255))";
+    var sql = "CREATE TABLE resuwee_enlarged (name VARCHAR(500), password VARCHAR(500), profile TEXT(200000), style VARCHAR(500))";
     con.query(sql, function (err, result) {
         if (err) throw err;
         console.log("Table created");
     });
 }
-
-// createTable()
+// startServer();
+// createTable();
 
 async function register(user){
     return new Promise((resolve, reject) => {
-        var sql = "INSERT INTO resuwee_users (name,password, profile, style) VALUES ( '" + user.name+ "', '"+ user.password+"', '" + user.profile+ "', '"+ user.style+"')";
+        var sql = "INSERT INTO resuwee_enlarged (name,password, profile, style) VALUES ( '" + user.name+ "', '"+ user.password+"', '" + user.profile+ "', '"+ user.style+"')";
         con.query(sql, function (err, result) {
         if (err) reject(err);
-        // console.log("1 record iserted");
-        resolve("1 record inserted");
+        console.log("1 record iserted");
+        resolve(result);
         });
 })};
 
 async function login(user){
     return new Promise((resolve, reject) => {
-        var sql = "SELECT * from resuwee_users where name='"+user.name+"'AND password='" + user.password+"'";
+        var sql = "SELECT * from resuwee_enlarged where name='"+user.name+"'AND password='" + user.password+"'";
         con.query(sql, function (err, result) {
             if (err) reject(err);
             // console.log(result);
@@ -47,7 +47,7 @@ async function login(user){
 
 async function update(user) {
     return new Promise((resolve, reject) => {
-        var sql = "UPDATE resuwee_users SET profile='"+user.profile+"' WHERE name = '"+user.name+"'";
+        var sql = "UPDATE resuwee_enlarged SET profile='"+user.profile+"' WHERE name = '"+user.name+"' AND password = '"+user.password+"'";
         con.query(sql, function (err, result) {
             if (err) reject(err);
             console.log(result.affectedRows + " record(s) updated");
@@ -59,4 +59,5 @@ async function update(user) {
 module.exports.login = login;
 module.exports.register = register;
 module.exports.startServer = startServer;
+module.exports.update = update;
 

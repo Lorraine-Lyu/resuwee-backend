@@ -46,17 +46,22 @@ app.use(async ctx => {
             ctx.body = err;
         })
     } else if (ctx.path === "/edit"&& ctx.method==="POST") {
-        ctx.body ='edit user page';
-    } else if (ctx.path === "/register"&& ctx.method==="POST") {
         console.log(ctx.request.body);
-        await db.register(ctx.request.body)
+        await db.update(ctx.request.body)
         .then((msg)=> {
-            console.log(msg);
             ctx.body = msg;
         }).catch((err)=> {
             ctx.body = err;
         });
-    } else if (ctx.method==="OPTIONS" && ctx.path === "/register") {
+    } else if (ctx.path === "/register"&& ctx.method==="POST") {
+        console.log(ctx.request.body);
+        await db.register(ctx.request.body)
+        .then((msg)=> {
+            ctx.body = msg;
+        }).catch((err)=> {
+            ctx.body = err;
+        });
+    } else if (ctx.method==="OPTIONS" && (ctx.path === "/register" || ctx.path === "/edit")) {
         ctx.status = 200;
     }
 });

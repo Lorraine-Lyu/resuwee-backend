@@ -45,6 +45,15 @@ app.use(async ctx => {
         }).catch((err)=>{
             ctx.body = err;
         })
+    } else if (ctx.path === "/view" && ctx.method==="GET") {
+        console.log(ctx.query);
+        await db.view(ctx.query)
+        .then((userInfo)=>{
+            console.log(userInfo);
+            ctx.body = userInfo[0];
+        }).catch((err)=>{
+            ctx.body = err;
+        })
     } else if (ctx.path === "/edit"&& ctx.method==="POST") {
         console.log(ctx.request.body);
         await db.update(ctx.request.body)

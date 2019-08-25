@@ -7,6 +7,13 @@ var con = mysql.createConnection({
   database: "user_accounts",
 });
 
+// var con = mysql.createConnection({
+//       host: "localhost",
+//       user: "root",
+//       password: "Resuwee121!",
+//       database: "user_info",
+//     });
+
 async function startServer(){
     con.connect(function(err) {
         if (err) throw err;
@@ -56,8 +63,20 @@ async function update(user) {
     })
 }
 
+async function view(user) {
+    return new Promise((resolve, reject) => {
+        var sql = "SELECT * from resuwee_enlarged where name='"+user.name+"'";
+        con.query(sql, function (err, result) {
+            if (err) reject(err);
+            // console.log(result);
+            resolve(result)
+        });
+    })  
+}
+
 module.exports.login = login;
 module.exports.register = register;
 module.exports.startServer = startServer;
 module.exports.update = update;
+module.exports.view = view;
 

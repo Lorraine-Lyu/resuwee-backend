@@ -7,6 +7,13 @@ var con = mysql.createConnection({
   database: "user_accounts",
 });
 
+// var con = mysql.createConnection({
+//       host: "localhost",
+//       user: "root",
+//       password: "Resuwee121!",
+//       database: "user_info",
+//     });
+
 async function startServer(){
     con.connect(function(err) {
         if (err) throw err;
